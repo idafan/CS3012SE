@@ -1,5 +1,4 @@
-from binarytreefile import Bintree
+from binarytreefile import BinaryTree
 
-Binarytree = Bintree()
-numbers = ["10","6","15","20","12","2","5"]
-
+Bintree = BinaryTree()
+Bintree.add("10")

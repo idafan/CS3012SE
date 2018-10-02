@@ -8,14 +8,14 @@ class Node():
         self.greater = None
 
 
-class Bintree():
+class BinaryTree():
 
     def __init__(self):
         self.root = None
 
     def add(self, node):
-        #adds a node to the binary 
-        addNode(self.root, node)
+        #adds a node to the binary tree
+        self.root = addNode(self.root, node)
 
 
 def addNode(node, newnode):
@@ -26,7 +26,7 @@ def addNode(node, newnode):
     if node == None:
         node  = Node(newnode)
 
-    elif newnode > node:
+    elif newnode < node.value:
         #If the newnode is greater than the node there is two cases
         #If the node.greater is None, the newnode will be added as a node there
         #If there is a value in node.greater, that value there will be compared with the newnode
@@ -41,6 +41,9 @@ def addNode(node, newnode):
             node.less = Node(newnode)
         else:
             addNode(node.less, newnode)
+
+
+    return node #The node needs to be returned to be saved in self.root
         
         
         
