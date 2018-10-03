@@ -7,8 +7,8 @@ class TestRoot(unittest.TestCase):
         #Create a root, test that the node now have a value
         Bintree = BinaryTree()
         Bintree.add(10)
-        root = Bintree.root
-        self.assertIsNotNone(root)
+        
+        self.assertIsNotNone(Bintree.root)
 
     def test_nodes(self):
         Bintree = BinaryTree()
@@ -17,6 +17,7 @@ class TestRoot(unittest.TestCase):
         Bintree.add(15)
         Bintree.add(2)
         Bintree.add(12)
+        
         self.assertEqual(Bintree.root.value, 10)
         self.assertEqual(Bintree.root.less.value, 8)
         self.assertEqual(Bintree.root.greater.value, 15)
@@ -29,10 +30,21 @@ class TestRoot(unittest.TestCase):
         numbers = [10, 8, 15, 2, 12, 9, 18]
         for number in numbers:
             Bintree.add(number)
+            
         self.assertTrue(Bintree.contains(10))
         self.assertTrue(Bintree.contains(2))
         self.assertTrue(Bintree.contains(18))
-        self.assertFalse(Bintree.contains(4))        
+        self.assertFalse(Bintree.contains(4))
+
+    def test_LCA(self):
+        Bintree = BinaryTree()
+        numbers = [10, 8, 15, 2, 12, 9, 18]
+        for number in numbers:
+            Bintree.add(number)
+        self.assertEqual(Bintree.LCA(15,8),10)
+        self.assertEqual(Bintree.LCA(2,9),8)
+        
+        
 
 
 if __name__ == '__main__':

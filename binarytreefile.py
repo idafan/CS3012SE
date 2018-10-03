@@ -21,6 +21,10 @@ class BinaryTree():
         #checks if the value is in the binary tree
         return contain(self.root, value)
 
+    def LCA(self, value1, value2):
+        return lowest(self.root, value1, value2)
+        
+
 
 def addNode(node, newnode):
     #The function who finds where to add the new node, compare the existing value with the newnode
@@ -72,6 +76,21 @@ def contain(node, value):
         #Something is wrong
         return False
 
+def lowest(node, value1, value2):
+    if value1 == node.value or value2 == node.value:
+        return node.value
+
+    elif value1 < node.value and value2 < node.value:
+        return lowest(node.less, value1, value2)
+
+    elif value1 > node.value and value2 > node.value:
+        return lowest(node.greater, value1, value2)
+
+    elif value1 < node.value < value2 or value2 < node.value < value1:
+        return node.value
+
+    else:
+        return "Something is wrong"
     
     
         
