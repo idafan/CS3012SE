@@ -22,7 +22,17 @@ class TestRoot(unittest.TestCase):
         self.assertEqual(Bintree.root.greater.value, 15)
         self.assertEqual(Bintree.root.less.less.value, 2)
         self.assertEqual(Bintree.root.greater.less.value, 12)
-        
+
+
+    def test_contain(self):
+        Bintree = BinaryTree()
+        numbers = [10, 8, 15, 2, 12, 9, 18]
+        for number in numbers:
+            Bintree.add(number)
+        self.assertTrue(Bintree.contains(10))
+        self.assertTrue(Bintree.contains(2))
+        self.assertTrue(Bintree.contains(18))
+        self.assertFalse(Bintree.contains(4))        
 
 
 if __name__ == '__main__':

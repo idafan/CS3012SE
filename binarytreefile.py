@@ -2,7 +2,7 @@
 
 class Node():
 
-    def __init__(self,value):
+    def __init__(self, value):
         self.value = value
         self.less = None
         self.greater = None
@@ -16,6 +16,10 @@ class BinaryTree():
     def add(self, node):
         #adds a node to the binary tree
         self.root = addNode(self.root, node)
+
+    def contains(self, value):
+        #checks if the value is in the binary tree
+        return contain(self.root, value)
 
 
 def addNode(node, newnode):
@@ -45,7 +49,31 @@ def addNode(node, newnode):
 
     return node #The node needs to be returned to be saved in self.root
         
-        
+
+def contain(node, value):
+    if node == None:
+        #If the root is None there are no values in the binary tree
+        #If it search through the tree without finding the value, it will eventually reach None
+        return False
+    
+    elif node.value == value:
+        #The value has been found
+        return True
+
+    elif value >= node.value:
+        #It will continue to compare with the greater value
+        return contain(node.greater, value)
+
+    elif value <= node.value:
+        #Compares with the lesser value
+        return contain(node.less, value)
+
+    else:
+        #Something is wrong
+        return False
+
+    
+    
         
 
 
