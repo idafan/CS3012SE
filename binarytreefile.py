@@ -22,7 +22,20 @@ class BinaryTree():
         return contain(self.root, value)
 
     def LCA(self, value1, value2):
-        return lowest(self.root, value1, value2)
+        #checks that the values is in the binary tree
+        contain1 = self.contains(value1)
+        contain2 = self.contains(value2)
+        if contain1 and contain2:
+            #if both values are in the tree the LCA is checked
+            return lowest(self.root, value1, value2)
+
+        elif contain1 is False and contain2:
+            return str(value1) + " is not in the binary tree"
+
+        elif contain2 is False and contain1:
+            return str(value2) + " is not in the binary tree"
+        else:
+            return str(value1) + " and " + str(value2) + " are not in the binary tree"
         
 
 
@@ -77,6 +90,7 @@ def contain(node, value):
         return False
 
 def lowest(node, value1, value2):
+    
     if value1 == node.value or value2 == node.value:
         return node.value
 

@@ -43,7 +43,9 @@ class TestRoot(unittest.TestCase):
             Bintree.add(number)
         self.assertEqual(Bintree.LCA(15,8),10)
         self.assertEqual(Bintree.LCA(2,9),8)
-        
+        self.assertSequenceEqual(Bintree.LCA(4,8), "4 is not in the binary tree")
+        self.assertSequenceEqual(Bintree.LCA(2,3), "3 is not in the binary tree")
+        self.assertSequenceEqual(Bintree.LCA(24,6), "24 and 6 are not in the binary tree")
         
 
 
