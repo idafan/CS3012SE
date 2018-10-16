@@ -1,16 +1,16 @@
-from binarytreefile import BinaryTree
+from DAGfile import DAGclass
 
 def main():
-    #creating a binary tree and adding some values
-    Bintree = BinaryTree()
-    numbers = [10, 8, 15, 2, 12, 9, 18]
-    
-    for number in numbers:
-        Bintree.add(number)
+    """creating a DAG-class"""
+    Graph = DAGclass()
 
-    value1 = int(input("1st value: "))
-    value2 = int(input("2nd value: "))
-    print("LCA(" + str(value1) + "," + str(value2) + ") = " + str(Bintree.LCA(value1,value2)))
+    """Create nodes and adding them to the graph"""
+    
+    Graph.add("A")
+
+##    value1 = int(input("1st value: "))
+##    value2 = int(input("2nd value: "))
+##    print("LCA(" + str(value1) + "," + str(value2) + ") = " + str(Bintree.LCA(value1,value2)))
 
 
 
