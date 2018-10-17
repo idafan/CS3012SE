@@ -10,28 +10,23 @@ class Node():
 class DAGclass():
 
     def __init__(self):
+        """graph with a list of all the vertices and edges"""
         self.graph = None
         
 
-    def add(self, node, parent = None):
-        """adds a node to the binary tree"""
+    def add(self, node, arrow = None):
+        """adds a node to the graph"""
 
-        self.graph = addNode(self.graph, node, parent)
+        self.graph = addNode(self.graph, node, arrow)
 
     
     def contains(self, value):
+        """checks if the value is in the graph"""
         if self.graph == None:
             sys.exit("There are no values in the graph")
             
         else:
-            nodeObject = contain(self.graph, value)
-            
-            if nodeObject == False:
-                sys.exit("Cant find " + str(value) + "in the graph")
-
-            else:
-                return nodeObject
-
+            return contain(self.graph, value)
 
         
     def LCA(self, value1, value2):
@@ -56,10 +51,12 @@ class DAGclass():
 """ -------------------------------- end of classes ---------------------------- """       
         
     
-def addNode(graph, newnode, parent):
-    
+def addNode(graph, newnode, arrow):
+    """adds the newnode to the graph, also finds the parent that the arrow is pointing to"""
     if graph == None:
-        if parent == None: #If graph is None the graph is empty, the node can not have a parent
+        #If graph is None the graph is empty,
+        #The node can not have an arrow pointing at something
+        if arrow == None:
             node  = Node(newnode)
             graph = []
             graph.append(node)
@@ -67,14 +64,19 @@ def addNode(graph, newnode, parent):
             sys.exit("The graph is empty, the node can't have a parent")
             
     else:
-        node = Node(newnode,parent)
+        for vertex in graph:
+            if vertex.value == arrow:
+                parent = vertex
+                break
+            
+        node = Node(newnode,vertex)
         graph.append(node)
 
     return graph
 
 
 def contain(graph, value):
-
+    """Goes through the vertices to see that the value is in the graph"""
     for vertex in graph:
         if vertex.value == value:
             return True
@@ -83,10 +85,10 @@ def contain(graph, value):
 
 
 def lowest(graph, value1, value2):
-    """Finding the path from value1 to the root"""
+    """Finds the path for both values, then checks the LCA"""
     path1 = []
     path1.append(value1)
-    path1 = pathDAG(graph, value1, path1) 
+    path1 = pathDAG(graph, value1, path1)
 
     path2 = []
     path2.append(value2)
@@ -99,15 +101,16 @@ def lowest(graph, value1, value2):
          
 
 def pathDAG(graph, value, path):
-    """Find the path via recursive function
-    starts with adding the value, then all the nodes to the root"""
-    
+    """Find the path via recursive function.
+    Starts with adding the value, then all the nodes to the root in the list path"""
+
     for vertex in graph:
-        if vertex.arrow != None:
-            for node in vertex.arrow:
-                if node == value:
-                    path.append(node.value)
-                    pathDAG(graph, node.value, path)
+        if vertex.value == value:
+            if vertex.arrow == None:
+                break
+            else:
+                path.append(vertex.arrow.value)
+                pathDAG(graph, vertex.arrow.value, path)
 
     return path
     
