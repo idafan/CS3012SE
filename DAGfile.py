@@ -1,7 +1,8 @@
+import sys
+
 class Node():
 
     def __init__(self, value = None, arrow = None ):
-        self.parent = None
         self.value = value #The node's value
         self.arrow = arrow #This will be a list of the objects that the node are pointing at
 
@@ -9,83 +10,112 @@ class Node():
 class DAGclass():
 
     def __init__(self):
-        self.root = None
+        self.graph = None
+        
 
     def add(self, node, parent = None):
         """adds a node to the binary tree"""
-        self.contains(parent)
-        self.root = addNode(self.root, node, parent)
+
+        self.graph = addNode(self.graph, node, parent)
+
     
     def contains(self, value):
-        if self.root == None:
-            print("There are no values in the graph")
-            return False
+        if self.graph == None:
+            sys.exit("There are no values in the graph")
+            
         else:
-            nodeObject = contain(self.root, value)
+            nodeObject = contain(self.graph, value)
             
             if nodeObject == False:
-                print("Cant find " + str(value) + "in the graph")
+                sys.exit("Cant find " + str(value) + "in the graph")
 
             else:
                 return nodeObject
+
+
         
     def LCA(self, value1, value2):
         """checks that the values for LCA are in the graph"""
         contain1 = self.contains(value1)
         contain2 = self.contains(value2)
-        if contain1 == False or contain2 == False:
-            print("Can't find the LCA")
-            
+        
+        if contain1 and contain2:
+            #if both values are in the graph the LCA is checked
+            return lowest(self.graph, value1, value2)
+
+        elif contain1 is False and contain2:
+            return str(value1) + " is not in the graph"
+
+        elif contain2 is False and contain1:
+            return str(value2) + " is not in the graph"
         else:
-            return lowest(self.root, contain1, contain2)
+            return str(value1) + " and " + str(value2) + " are not in the graph"
 
         
+
+""" -------------------------------- end of classes ---------------------------- """       
         
     
-def addNode(root, newnode, parent):
-
-    if parent == None:
-        try:
-            if node == None: #Limits the graph to have only one root
-                node  = Node(newnode)
-        except:
-            print("You can only have one root, you must assign a parent to the node")
+def addNode(graph, newnode, parent):
+    
+    if graph == None:
+        if parent == None: #If graph is None the graph is empty, the node can not have a parent
+            node  = Node(newnode)
+            graph = []
+            graph.append(node)
+        else:
+            sys.exit("The graph is empty, the node can't have a parent")
             
-    node = None
-
-    return node
-
-
-def contain(node, value):
-
-    if node.value == value:
-        return node
-
-    if node.arrow == None:
-        return False
-    
     else:
-        for vertex in node.arrow:
-            return contain(vertex, value)
+        node = Node(newnode,parent)
+        graph.append(node)
 
-def lowest(node, value1, value2):
+    return graph
+
+
+def contain(graph, value):
+
+    for vertex in graph:
+        if vertex.value == value:
+            return True
+
+    return False
+
+
+def lowest(graph, value1, value2):
     """Finding the path from value1 to the root"""
     path1 = []
-    if value1.parent == None:
-        path1.append(value1.value)
+    path1.append(value1)
+    path1 = pathDAG(graph, value1, path1) 
 
-    """Finding the path for value2 but compare this to the path of value1"""
-    if value2.parent == None:
-        for node in path1:
-            if node.value == value2:
-                return value2
+    path2 = []
+    path2.append(value2)
+    path2 = pathDAG(graph, value2, path2)
+
+    for node1 in path1:
+        for node2 in path2:
+            if node1 == node2:
+                return node1       
          
-         
 
+def pathDAG(graph, value, path):
+    """Find the path via recursive function
+    starts with adding the value, then all the nodes to the root"""
+    
+    for vertex in graph:
+        if vertex.arrow != None:
+            for node in vertex.arrow:
+                if node == value:
+                    path.append(node.value)
+                    pathDAG(graph, node.value, path)
 
-##def path():
-##    """Find the path via recursive function??"""
-##    
+    return path
+    
+        
+            
+        
+    
+    
     
     
 
