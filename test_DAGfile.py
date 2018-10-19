@@ -14,7 +14,7 @@ class TestDAG(unittest.TestCase):
 
     def test_oneLine(self):
         #A line of nodes
-        #The LCA in a line will be the node that is the furthest up in the graph
+        #The LCA of nodes in a line will be the line furthest up in the line
         Graph = DAGclass()
         Graph.add("A")
         Graph.add("B","A")
@@ -55,13 +55,36 @@ class TestDAG(unittest.TestCase):
         self.assertEqual(Graph.LCA("F","C"), "C")
         self.assertEqual(Graph.LCA("E","F"), "E")
         self.assertEqual(Graph.LCA("F","E"), "E")
-        
 
-        
+    def test_noNodes(self):
+        Graph = DAGclass()
+        self.assertEqual(Graph.LCA("F","E"), "F and E are not in the graph")
 
-##    def test_noNode(self):
-##        Graph = DAGclass()
-##        self.assertRaises()
+    def test_twoEqualLCAs(self):
+        Graph = DAGclass()
+        Graph.add("A")
+        Graph.add("B","A")
+        Graph.add("C","B")
+        Graph.add("D","A")
+        Graph.add("E","D")
+        Graph.addArrow("C","D")
+        Graph.addArrow("E","B")
+        self.assertEqual(Graph.LCA("E","C"), "D, B")
+
+
+    def test_threeEqualLCAs(self):
+        Graph = DAGclass()
+        Graph.add("A")
+        Graph.add("B","A")
+        Graph.add("C","B")
+        Graph.add("D","A")
+        Graph.add("E","D")
+        Graph.add("F","A")
+        Graph.addArrow("C","F")
+        Graph.addArrow("C","D")
+        Graph.addArrow("E","B")
+        Graph.addArrow("E","F")
+        self.assertEqual(Graph.LCA("C","E"), "B, F, D")
 
 
 if __name__ == '__main__':

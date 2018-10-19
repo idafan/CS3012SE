@@ -1,4 +1,3 @@
-import sys
 
 class Node():
 
@@ -49,8 +48,7 @@ class DAGclass():
     def contains(self, value):
         """checks if the value is in the graph"""
         if self.graph == None:
-            sys.exit("There are no values in the graph")
-            #Kan inte använda sys.exit iom unittesting, try or except?????
+            return
             
         else:
             return contain(self.graph, value)
@@ -91,7 +89,7 @@ def addNode(graph, newnode, arrow):
             graph = []
             graph.append(node)
         else:
-            sys.exit("The graph is empty, the node can't have a parent")
+            print("The graph is empty, the node can't have a parent")
             
     else:
         for node in graph:
@@ -130,12 +128,18 @@ def lowest(graph, value1, value2):
     dictLCA = {} #If there are several paths, the diferent LCAs is saved here
 
     for path in path1:
+        
         for node1 in path:
+            count +=1
             for paths in path2:
+                
                 for node2 in paths:
-                    count +=1
+                    
                     if node1 == node2:
-                        dictLCA[count] = node1
+                        if not count in dictLCA:
+                            dictLCA[count] = node1
+                        else:
+                            dictLCA[count] = dictLCA[count] + ", " + node1
                         count = 0
                         break
                 else:
