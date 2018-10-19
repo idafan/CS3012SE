@@ -117,66 +117,55 @@ def contain(graph, value):
 def lowest(graph, value1, value2):
     """Finds the path for both values, then checks the LCA"""
     path1 = []
-    path1.append(value1)
-    path1 = pathDAG(graph, value1, path1)
+    onePath = []
+    onePath.append(value1)
+    path1 = pathDAG(graph, value1, path1, onePath)
     print(path1)
 
     path2 = []
-    path2.append(value2)
-    path2 = pathDAG(graph, value2, path2)
+    onePath = []
+    onePath.append(value2)
+##    path2.append(value2)
+    path2 = pathDAG(graph, value2, path2, onePath)
     print(path2)
 
-    for node1 in path1:
-        for node2 in path2:
-            if node1 == node2:
-                break
-        else:
-            continue #executed if inner loop do not breaks
-        break #executed if inner loop do break
-    return node1
-         
-
-def pathDAG(graph, value, path):
-    """Find the path via recursive function.
-    Starts with adding the value, then all the nodes to the root in the list path"""
-
-    for node in graph:
-##        print("1 " + node.value)
-        if node.value == value:
-            for vertex in node.arrow:
-##                print(len(node.arrow))
-##                print(vertex)
-                if vertex == None:
-##                    print("Noneeeee")
-                    break
-##                elif len(node.arrow) >= 2:
-##
-##                    for arrow in node.arrow:
-##                        print("hej: " + arrow.value)
-##                        path.append(arrow.value)
-##                        
-##                        pathDAG(graph, arrow.value, path)
-                    
-                else:
-                    for arrow in node.arrow:
-##                        print("2 " + arrow.value)
-                        path.append(arrow.value)
-                        pathDAG(graph, arrow.value, path)
-##                        print("after")
-##                    print(path)
-##                    print("else: " + str(vertex.value))
-##                    path.append(vertex.value)
-##                    pathDAG(graph, vertex.value, path)
+    for path in path1:
+        for node1 in path:
+            for paths in path2:
+                for node2 in paths:
+                    print("node1: " + node1)
+                    print("node2: " + node2)
+                    if node1 == node2:
+                        print(node1)
+                        break
+##                else:
+##                    continue #executed if inner loop do not breaks
+##                break #executed if inner loop do break
 ##            else:
-##                continue  
+##                continue
 ##            break
 ##        else:
 ##            continue
 ##        break
+                
+    return node1
+         
 
-
+def pathDAG(graph, value, path, onePath):
+    """Find the path via recursive function.
+    Starts with adding the value, then all the nodes to the root in the list path"""
+    for node in graph:
+        if node.value == value:
+            for vertex in node.arrow:
+                if vertex == None:
+                    path.append(onePath)
+                    break
                     
-
+                else:
+                    onePath.append(vertex.value)
+                    pathDAG(graph, vertex.value, path, onePath)
+                    onePath = [onePath[0]]
+                    
     return path
     
     

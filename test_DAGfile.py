@@ -49,10 +49,10 @@ class TestDAG(unittest.TestCase):
         Graph.add("E","D")
         Graph.add("F","C")
         Graph.addArrow("F","E")
-        self.assertEqual(Graph.LCA("E","C"), "A")
-        self.assertEqual(Graph.LCA("C","B"), "B")
-        self.assertEqual(Graph.LCA("F","C"), "C")
-##        self.assertEqual(Graph.LCA("F","E"), "E")
+##        self.assertEqual(Graph.LCA("E","C"), "A")
+##        self.assertEqual(Graph.LCA("C","B"), "B")
+##        self.assertEqual(Graph.LCA("F","C"), "C")
+        self.assertEqual(Graph.LCA("F","E"), "E")
         
 
         
