@@ -120,35 +120,33 @@ def lowest(graph, value1, value2):
     onePath = []
     onePath.append(value1)
     path1 = pathDAG(graph, value1, path1, onePath)
-    print(path1)
 
     path2 = []
     onePath = []
     onePath.append(value2)
-##    path2.append(value2)
     path2 = pathDAG(graph, value2, path2, onePath)
-    print(path2)
+
+    count = 0
+    dictLCA = {} #If there are several paths, the diferent LCAs is saved here
 
     for path in path1:
         for node1 in path:
             for paths in path2:
                 for node2 in paths:
-                    print("node1: " + node1)
-                    print("node2: " + node2)
+                    count +=1
                     if node1 == node2:
-                        print(node1)
+                        dictLCA[count] = node1
+                        count = 0
                         break
-##                else:
-##                    continue #executed if inner loop do not breaks
-##                break #executed if inner loop do break
-##            else:
-##                continue
-##            break
-##        else:
-##            continue
-##        break
+                else:
+                    continue #executed if inner loop do not breaks
+                break #executed if inner loop do break
+            else:
+                continue
+            break #Will break when finding the LCA for each path
+
                 
-    return node1
+    return dictLCA[min(dictLCA)] #min() looks for the CA with the shortest path
          
 
 def pathDAG(graph, value, path, onePath):
